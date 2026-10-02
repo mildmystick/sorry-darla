@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Darla, My Whole World | With All My Love</title>
+  <meta name="description" content="A sincere apology and heartfelt letter dedicated to my beloved wife, Darla.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at 50% 30%, #301725 0%, #1c0e18 60%, #0e050c 100%);
+      --envelope-base: #f7ebe1;
+      --envelope-shade: #ecd5c4;
+      --envelope-dark: #dfc2ad;
+      --seal-red: #9e1b32;
+      --seal-glow: rgba(224, 60, 95, 0.45);
+      --gold-accent: #d4af37;
+      --gold-light: #f7df94;
+      --rose-pink: #e88d9c;
+      --text-main: #2b1f1d;
+      --text-muted: #6b5853;
+      --parchment: #fdfbf7;
+      --parchment-border: #eedbc8;
+      --shadow-soft: 0 15px 35px rgba(0, 0, 0, 0.45);
+      --shadow-letter: 0 25px 60px rgba(0, 0, 0, 0.55);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 15px;
+    }
+
+    /* Ambient Rose Petals Canvas */
+    #petalsCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Floating Music Toggle Pill */
+    .audio-control-bar {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .music-btn {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      padding: 9px 16px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      transition: all 0.35s ease;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .music-btn:hover {
+      background: rgba(255, 255, 255, 0.22);
+      border-color: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .equalizer-icon {
+      display: flex;
+      align-items: flex-end;
+      gap: 2.5px;
+      height: 14px;
+    }
+
+    .equalizer-icon span {
+      width: 3px;
+      background: var(--gold-light);
+      border-radius: 2px;
+      height: 4px;
+      transition: height 0.2s ease;
+    }
+
+    .music-btn.playing .equalizer-icon span:nth-child(1) {
+      animation: soundwave 1.2s ease-in-out infinite alternate;
+    }
+    .music-btn.playing .equalizer-icon span:nth-child(2) {
+      animation: soundwave 0.8s ease-in-out infinite alternate 0.2s;
+    }
+    .music-btn.playing .equalizer-icon span:nth-child(3) {
+      animation: soundwave 1.4s ease-in-out infinite alternate 0.4s;
+    }
+
+    @keyframes soundwave {
+      0% { height: 3px; }
+      100% { height: 14px; }
+    }
+
+    /* Outer Wrapper */
+    .app-viewport {
+      width: 100%;
+      max-width: 860px;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+      padding-top: 40px;
+      padding-bottom: 50px;
+    }
+
+    /* ========================================================
+       STAGE 1: ENVELOPE SCENE
+       ======================================================== */
+    .envelope-scene {
+      width: 100%;
+      max-width: 480px;
+      perspective: 1200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .envelope-scene.hidden {
+      opacity: 0;
+      transform: scale(0.9) translateY(40px);
+      pointer-events: none;
+      position: absolute;
+      visibility: hidden;
+    }
+
+    .envelope-teaser-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 25px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .envelope-teaser-title i {
+      color: var(--rose-pink);
+    }
+
+    .envelope-wrapper {
+      position: relative;
+      width: 100%;
+      height: 310px;
+      background: var(--envelope-shade);
+      border-radius: 12px;
+      box-shadow: var(--shadow-soft), 0 0 45px rgba(232, 141, 156, 0.15);
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      overflow: visible;
+    }
+
+    .envelope-wrapper:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 55px rgba(232, 141, 156, 0.25);
+    }
+
+    /* Envelope flaps */
+    .envelope-top-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 240px solid transparent;
+      border-right: 240px solid transparent;
+      border-top: 170px solid var(--envelope-base);
+      transform-origin: top;
+      transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 5;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.12));
+    }
+
+    .envelope-left-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-top: 155px solid transparent;
+      border-bottom: 155px solid transparent;
+      border-left: 240px solid var(--envelope-dark);
+      border-radius: 12px 0 0 12px;
+      z-index: 3;
+    }
+
+    .envelope-right-flap {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-top: 155px solid transparent;
+      border-bottom: 155px solid transparent;
+      border-right: 240px solid var(--envelope-dark);
+      border-radius: 0 12px 12px 0;
+      z-index: 3;
+    }
+
+    .envelope-bottom-flap {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 240px solid transparent;
+      border-right: 240px solid transparent;
+      border-bottom: 180px solid var(--envelope-base);
+      border-radius: 0 0 12px 12px;
+      z-index: 4;
+      filter: drop-shadow(0 -3px 8px rgba(0,0,0,0.06));
+    }
+
+    /* Cursive Calligraphy on Front of Envelope */
+    .envelope-address-card {
+      position: absolute;
+      z-index: 6;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      width: 86%;
+      pointer-events: none;
+    }
+
+    .envelope-to {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.3rem;
+      color: #3b2723;
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .envelope-from {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: #6d4c41;
+      opacity: 0.9;
+    }
+
+    /* Wax Seal Stamp */
+    .wax-seal {
+      position: absolute;
+      top: 135px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 78px;
+      height: 78px;
+      background: radial-gradient(circle at 35% 35%, #b5223c 0%, var(--seal-red) 55%, #6a101f 100%);
+      border-radius: 50%;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), 0 0 25px var(--seal-glow), inset 0 2px 4px rgba(255,255,255,0.3), inset 0 -3px 5px rgba(0,0,0,0.5);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: gentlePulse 2.8s infinite ease-in-out;
+    }
+
+    .wax-seal:hover {
+      transform: translate(-50%, -50%) scale(1.08);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5), 0 0 35px rgba(224, 60, 95, 0.7);
+    }
+
+    .wax-seal svg {
+      width: 32px;
+      height: 32px;
+      fill: #f9d5bb;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+    }
+
+    .wax-seal span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.58rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #fce2cf;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    @keyframes gentlePulse {
+      0%, 100% { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), 0 0 20px var(--seal-glow); }
+      50% { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 32px rgba(224, 60, 95, 0.65); }
+    }
+
+    /* Open Hint Indicator */
+    .tap-hint-pill {
+      margin-top: 30px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(8px);
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      color: var(--rose-pink);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 0.5px;
+      animation: bounceHint 2.2s infinite ease-in-out;
+    }
+
+    @keyframes bounceHint {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Envelope Opening State */
+    .envelope-wrapper.opening .envelope-top-flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+
+    .envelope-wrapper.opening .wax-seal {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.6);
+      transition: all 0.4s ease;
+    }
+
+    /* ========================================================
+       STAGE 2: THE APOLOGY LETTER SCENE
+       ======================================================== */
+    .letter-scene {
+      width: 100%;
+      max-width: 780px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(50px) scale(0.96);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .letter-scene.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* The Parchment Document */
+    .parchment-sheet {
+      position: relative;
+      width: 100%;
+      background: var(--parchment);
+      background-image: 
+        radial-gradient(#eedbc8 0.75px, transparent 0.75px),
+        linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(251, 247, 238, 0.95) 100%);
+      background-size: 16px 16px, 100% 100%;
+      color: var(--text-main);
+      border-radius: 16px;
+      padding: 55px 50px;
+      box-shadow: var(--shadow-letter), inset 0 0 60px rgba(220, 190, 160, 0.25);
+      border: 1px solid var(--parchment-border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Inner Decorative Golden Border */
+    .parchment-sheet::before {
+      content: "";
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      border: 1.5px solid rgba(212, 175, 55, 0.45);
+      border-radius: 10px;
+      pointer-events: none;
+    }
+
+    .parchment-sheet::after {
+      content: "";
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      border: 1px dashed rgba(181, 140, 90, 0.25);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    /* Background Watermark Heart */
+    .watermark-flourish {
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 320px;
+      height: 320px;
+      opacity: 0.035;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Letter Top Bar */
+    .letter-top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(180, 150, 130, 0.2);
+      padding-bottom: 18px;
+      margin-bottom: 35px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .letter-date {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text-muted);
+    }
+
+    .refold-btn {
+      background: none;
+      border: 1px solid rgba(180, 150, 130, 0.4);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-family: 'Montserrat', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .refold-btn:hover {
+      background: rgba(180, 150, 130, 0.15);
+      color: var(--text-main);
+      border-color: var(--text-main);
+    }
+
+    /* Salutation & Typography */
+    .letter-salutation {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.4rem;
+      color: #8b1e2e;
+      line-height: 1.1;
+      margin-bottom: 25px;
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    }
+
+    .letter-lead {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      line-height: 1.8;
+      color: #3d2824;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 2;
+      font-style: italic;
+    }
+
+    .letter-body p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      line-height: 1.95;
+      color: var(--text-main);
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 2;
+      text-align: justify;
+    }
+
+    .letter-highlight-quote {
+      margin: 32px 0;
+      padding: 24px 30px;
+      background: rgba(232, 141, 156, 0.09);
+      border-left: 3.5px solid #a32238;
+      border-radius: 0 12px 12px 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.28rem;
+      font-style: italic;
+      color: #4a1521;
+      line-height: 1.8;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Promises Section Cards */
+    .promises-container {
+      margin: 40px 0 30px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .promises-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.55rem;
+      color: #721927;
+      text-align: center;
+      margin-bottom: 24px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .promises-title::before, .promises-title::after {
+      content: "";
+      height: 1px;
+      width: 45px;
+      background: rgba(180, 140, 110, 0.4);
+    }
+
+    .promises-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .promise-card {
+      background: #ffffff;
+      border: 1px solid #ebd8c7;
+      border-radius: 12px;
+      padding: 22px 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+      transition: all 0.35s ease;
+      position: relative;
+    }
+
+    .promise-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(163, 34, 56, 0.12);
+      border-color: #d68798;
+    }
+
+    .promise-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #9e1b32;
+      margin-bottom: 10px;
+    }
+
+    .promise-badge svg {
+      width: 14px;
+      height: 14px;
+      fill: #9e1b32;
+    }
+
+    .promise-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: #331f1d;
+      margin-bottom: 8px;
+    }
+
+    .promise-card p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #5a4843;
+      margin: 0;
+      text-align: left;
+    }
+
+    /* Letter Sign-off */
+    .letter-closing {
+      margin-top: 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .letter-closing p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .signature-handwritten {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.5rem;
+      color: #8b1e2e;
+      line-height: 1.1;
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .beating-heart-signature {
+      display: inline-block;
+      color: #c92a42;
+      animation: heartThump 1.4s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+
+    @keyframes heartThump {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.25); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.15); }
+      70% { transform: scale(1); }
+    }
+
+    /* ========================================================
+       STAGE 3: RESPONSE & INTERACTIVE SECTION
+       ======================================================== */
+    .response-section {
+      width: 100%;
+      margin-top: 35px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .response-header {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 18px;
+      letter-spacing: 0.5px;
+    }
+
+    .response-options {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .response-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    .response-btn:hover {
+      background: rgba(255, 255, 255, 0.22);
+      border-color: var(--rose-pink);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(224, 60, 95, 0.3);
+    }
+
+    /* Heartfelt Response Modal / Banner */
+    .response-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(14, 5, 12, 0.78);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      padding: 20px;
+    }
+
+    .response-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .response-modal-card {
+      background: #fff;
+      max-width: 480px;
+      width: 100%;
+      border-radius: 20px;
+      padding: 35px 30px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid #f3d7df;
+    }
+
+    .response-modal-overlay.active .response-modal-card {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-heart-icon {
+      width: 60px;
+      height: 60px;
+      background: #fdf0f2;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px auto;
+    }
+
+    .modal-heart-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: #b5223c;
+    }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.55rem;
+      color: #3b2225;
+      margin-bottom: 12px;
+    }
+
+    .modal-message {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      line-height: 1.7;
+      color: #614a48;
+      margin-bottom: 25px;
+    }
+
+    .modal-close-btn {
+      background: linear-gradient(135deg, #a32238 0%, #7d1527 100%);
+      color: #fff;
+      border: none;
+      padding: 11px 30px;
+      border-radius: 30px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(163, 34, 56, 0.35);
+      transition: all 0.3s ease;
+    }
+
+    .modal-close-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(163, 34, 56, 0.5);
+    }
+
+    /* Small Screen Adaptations */
+    @media (max-width: 600px) {
+      .app-viewport {
+        padding-top: 25px;
+      }
+      .parchment-sheet {
+        padding: 40px 24px;
+      }
+      .envelope-wrapper {
+        height: 270px;
+      }
+      .envelope-top-flap {
+        border-left-width: 170px;
+        border-right-width: 170px;
+        border-top-width: 140px;
+      }
+      .envelope-left-flap {
+        border-left-width: 170px;
+        border-top-width: 135px;
+        border-bottom-width: 135px;
+      }
+      .envelope-right-flap {
+        border-right-width: 170px;
+        border-top-width: 135px;
+        border-bottom-width: 135px;
+      }
+      .envelope-bottom-flap {
+        border-left-width: 170px;
+        border-right-width: 170px;
+        border-bottom-width: 150px;
+      }
+      .envelope-to {
+        font-size: 1.95rem;
+      }
+      .letter-salutation {
+        font-size: 2.7rem;
+      }
+      .letter-lead {
+        font-size: 1.2rem;
+      }
+      .letter-body p {
+        font-size: 1.15rem;
+      }
+      .signature-handwritten {
+        font-size: 2.8rem;
+      }
+      .response-options {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+      .response-btn {
+        justify-content: center;
+      }
+      .audio-control-bar {
+        top: 12px;
+        right: 12px;
+      }
+      .music-btn {
+        padding: 7px 12px;
+        font-size: 0.78rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Rose Petals & Stardust Canvas -->
+  <canvas id="petalsCanvas"></canvas>
+
+  <!-- Ambient Audio Control Floating Bar -->
+  <div class="audio-control-bar">
+    <button id="musicToggle" class="music-btn" aria-label="Toggle soothing piano music">
+      <div class="equalizer-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <span id="musicBtnLabel">Soft Music: Off</span>
+    </button>
+  </div>
+
+  <main class="app-viewport">
+
+    <!-- ========================================================
+         STAGE 1: THE WAX-SEALED ENVELOPE
+         ======================================================== -->
+    <section id="envelopeScene" class="envelope-scene" aria-label="Sealed Envelope for Darla">
+      <div class="envelope-teaser-title">
+        <span>A message from the deepest part of my heart</span>
+      </div>
+
+      <div id="envelopeWrapper" class="envelope-wrapper" role="button" tabindex="0" aria-label="Click to open the letter">
+        <div class="envelope-top-flap"></div>
+        <div class="envelope-left-flap"></div>
+        <div class="envelope-right-flap"></div>
+        <div class="envelope-bottom-flap"></div>
+
+        <!-- Wax Seal Stamp Button -->
+        <div id="waxSeal" class="wax-seal" title="Click to break the seal and read my heart">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          <span>Darla</span>
+        </div>
+
+        <!-- Envelope Calligraphy Address -->
+        <div class="envelope-address-card">
+          <div class="envelope-to">For My Beloved Wife, Darla</div>
+          <div class="envelope-from">You are my whole world & my everything</div>
+        </div>
+      </div>
+
+      <div class="tap-hint-pill">
+        <span>✨ Tap the wax seal to open my letter ✨</span>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         STAGE 2: THE APOLOGY & LOVE LETTER
+         ======================================================== -->
+    <section id="letterScene" class="letter-scene" aria-label="Letter for Darla">
+      <article class="parchment-sheet">
+        <!-- Watermark -->
+        <svg class="watermark-flourish" viewBox="0 0 24 24">
+          <path fill="#000" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+
+        <!-- Top Meta Bar -->
+        <div class="letter-top-meta">
+          <span class="letter-date">Written with deep regret & endless love</span>
+          <button id="refoldBtn" class="refold-btn" title="Fold the letter back into the envelope">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            Fold Letter
+          </button>
+        </div>
+
+        <!-- Salutation -->
+        <h1 class="letter-salutation">My Dearest Darla,</h1>
+
+        <!-- The Apology Core -->
+        <p class="letter-lead">
+          I am writing this to you with a heavy heart, complete humility, and tears of regret. I am so deeply, truly, and profoundly sorry for how I misbehaved with you.
+        </p>
+
+        <div class="letter-body">
+          <p>
+            There is no excuse, no justification, and no explanation that could ever defend the way I treated you. When I look back at my words and my actions, I feel sick inside knowing that the pain in your eyes came from me—the one person whose sole purpose should be to protect your smile and shelter your heart.
+          </p>
+
+          <p>
+            You did not deserve that. Not even for a second. You are the gentlest, most loving, and most caring woman in the world, and taking your kindness for granted or letting my own frustration spill over onto you was thoughtless, hurtful, and wrong. I own my mistake completely. I take full responsibility without shifting blame, because you deserve honesty, humility, and genuine accountability.
+          </p>
+
+          <div class="letter-highlight-quote">
+            "Darla, you are my whole world. You are all I have. In this lifetime, nothing matters more to me than your happiness, your comfort, and knowing that you are safe in my love."
+          </div>
+
+          <p>
+            When things are not right between us, my entire world feels cold and off-balance. I can’t eat right, I can’t think straight, and every quiet moment reminds me of how much I cherish you and how terrified I am of causing you pain. You aren’t just my wife—you are my best friend, my soulmate, my peace, and my anchor. Without you, I am lost.
+          </p>
+
+          <p>
+            I love you so much, Darla. I love you far beyond what simple words can hold, and I hate myself for ever making you feel unappreciated, disrespected, or hurt.
+          </p>
+        </div>
+
+        <!-- Sacred Promises Section -->
+        <div class="promises-container">
+          <h3 class="promises-title">My Sacred Promises to You</h3>
+          <div class="promises-grid">
+            <div class="promise-card">
+              <div class="promise-badge">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <span>Commitment 1</span>
+              </div>
+              <h4>To Listen With My Heart</h4>
+              <p>I promise to listen to you completely, to understand before seeking to be understood, and to never dismiss or diminish your feelings.</p>
+            </div>
+
+            <div class="promise-card">
+              <div class="promise-badge">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <span>Commitment 2</span>
+              </div>
+              <h4>To Choose Gentleness Always</h4>
+              <p>I promise to master my reactions, to speak with tenderness and respect, and to never let frustration dictate how I treat you.</p>
+            </div>
+
+            <div class="promise-card">
+              <div class="promise-badge">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <span>Commitment 3</span>
+              </div>
+              <h4>To Protect Your Peace</h4>
+              <p>I promise that being with me will always feel like coming home to a sanctuary where you feel adored, safe, valued, and cherished.</p>
+            </div>
+
+            <div class="promise-card">
+              <div class="promise-badge">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <span>Commitment 4</span>
+              </div>
+              <h4>To Treasure You Daily</h4>
+              <p>I promise to never take your presence for granted. I will prove my devotion through consistent actions every single day of our lives.</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="letter-body" style="margin-top: 25px;">
+          I know that an apology is only words until it is proven through actions. I don't ask you to instantly forget the hurt, but I beg for your forgiveness and the opportunity to hold you, wipe away any tear, and be the man and partner you deserve.
+        </p>
+
+        <!-- Closing & Signature -->
+        <div class="letter-closing">
+          <p>Forever and always yours,</p>
+          <div class="signature-handwritten">
+            With All My Love
+            <span class="beating-heart-signature">❤</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Gentle Interactive Response Bar -->
+      <div class="response-section">
+        <h4 class="response-header">Whenever you're ready, I'm right here...</h4>
+        <div class="response-options">
+          <button class="response-btn" data-type="heard">
+            <span>🤍</span>
+            <span>I hear your heart</span>
+          </button>
+          <button class="response-btn" data-type="talk">
+            <span>💬</span>
+            <span>Can we talk?</span>
+          </button>
+          <button class="response-btn" data-type="time">
+            <span>⏳</span>
+            <span>I need a little time</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Response Feedback Modal / Popup -->
+  <div id="responseModal" class="response-modal-overlay" role="dialog" aria-modal="true">
+    <div class="response-modal-card">
+      <div class="modal-heart-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      </div>
+      <h3 id="modalTitle" class="modal-title">Thank You, Darla</h3>
+      <p id="modalMessage" class="modal-message">I love you more than life itself.</p>
+      <button id="modalCloseBtn" class="modal-close-btn">Close with Love</button>
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript Engine -->
+  <script>
+    (function() {
+      // Elements
+      const envelopeScene = document.getElementById('envelopeScene');
+      const letterScene = document.getElementById('letterScene');
+      const envelopeWrapper = document.getElementById('envelopeWrapper');
+      const waxSeal = document.getElementById('waxSeal');
+      const refoldBtn = document.getElementById('refoldBtn');
+      const musicToggle = document.getElementById('musicToggle');
+      const musicBtnLabel = document.getElementById('musicBtnLabel');
+      const responseModal = document.getElementById('responseModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalMessage = document.getElementById('modalMessage');
+      const modalCloseBtn = document.getElementById('modalCloseBtn');
+      const responseBtns = document.querySelectorAll('.response-btn');
+
+      // ----------------------------------------------------
+      // 1. Web Audio Ambient Piano Synthesizer
+      // ----------------------------------------------------
+      class AmbientPianoSynth {
+        constructor() {
+          this.ctx = null;
+          this.isPlaying = false;
+          this.timer = null;
+          this.step = 0;
+          this.masterGain = null;
+
+          // Gentle romantic chord arpeggios:
+          // Chord 1: Cmaj7 (C4, E4, G4, B4)
+          // Chord 2: Am9 (A3, C4, E4, G4, B4)
+          // Chord 3: Fmaj7 (F3, A3, C4, E4)
+          // Chord 4: Gsus4 -> G (G3, C4, D4, G4, B4)
+          this.patterns = [
+            [261.63, 329.63, 392.00, 493.88, 523.25], // Cmaj7
+            [220.00, 261.63, 329.63, 392.00, 493.88], // Am9
+            [174.61, 220.00, 261.63, 329.63, 349.23], // Fmaj7
+            [196.00, 261.63, 293.66, 392.00, 493.88]  // Gsus4 / G
+          ];
+        }
+
+        initContext() {
+          if (!this.ctx) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            this.ctx = new AudioContext();
+            this.masterGain = this.ctx.createGain();
+            this.masterGain.gain.setValueAtTime(0.18, this.ctx.currentTime);
+            this.masterGain.connect(this.ctx.destination);
+          }
+          if (this.ctx.state === 'suspended') {
+            this.ctx.resume();
+          }
+        }
+
+        playNote(freq, time, duration = 2.4) {
+          if (!this.ctx) return;
+
+          // Dual oscillator: Triangle (body) + Sine (sweet warmth)
+          const osc1 = this.ctx.createOscillator();
+          const osc2 = this.ctx.createOscillator();
+          const noteGain = this.ctx.createGain();
+          const filter = this.ctx.createBiquadFilter();
+
+          // Low pass filter for soft felt-piano warmth
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(1100, time);
+          filter.frequency.exponentialRampToValueAtTime(350, time + duration);
+
+          osc1.type = 'triangle';
+          osc1.frequency.setValueAtTime(freq, time);
+
+          osc2.type = 'sine';
+          osc2.frequency.setValueAtTime(freq * 1.001, time); // slight chorus warmth
+
+          // Envelope: Soft touch attack and gradual exponential decay
+          noteGain.gain.setValueAtTime(0.0001, time);
+          noteGain.gain.linearRampToValueAtTime(0.24, time + 0.05);
+          noteGain.gain.exponentialRampToValueAtTime(0.0001, time + duration);
+
+          osc1.connect(filter);
+          osc2.connect(filter);
+          filter.connect(noteGain);
+          noteGain.connect(this.masterGain);
+
+          osc1.start(time);
+          osc2.start(time);
+          osc1.stop(time + duration);
+          osc2.stop(time + duration);
+        }
+
+        playSequence() {
+          if (!this.isPlaying || !this.ctx) return;
+
+          const chordIdx = Math.floor(this.step / 4) % this.patterns.length;
+          const noteIdx = this.step % this.patterns[chordIdx].length;
+          const freq = this.patterns[chordIdx][noteIdx];
+
+          const now = this.ctx.currentTime;
+          this.playNote(freq, now, 2.6);
+
+          // Root bass note at beginning of chord
+          if (noteIdx === 0) {
+            const bassFreq = this.patterns[chordIdx][0] / 2;
+            this.playNote(bassFreq, now, 3.5);
+          }
+
+          this.step++;
+          this.timer = setTimeout(() => {
+            this.playSequence();
+          }, 680);
+        }
+
+        start() {
+          this.initContext();
+          if (this.isPlaying) return;
+          this.isPlaying = true;
+          this.playSequence();
+          musicToggle.classList.add('playing');
+          musicBtnLabel.textContent = 'Soft Melody: On';
+        }
+
+        stop() {
+          this.isPlaying = false;
+          clearTimeout(this.timer);
+          musicToggle.classList.remove('playing');
+          musicBtnLabel.textContent = 'Soft Melody: Off';
+        }
+
+        toggle() {
+          if (this.isPlaying) {
+            this.stop();
+          } else {
+            this.start();
+          }
+        }
+      }
+
+      const synth = new AmbientPianoSynth();
+
+      musicToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        synth.toggle();
+      });
+
+      // ----------------------------------------------------
+      // 2. Interactive Envelope & Letter Transitions
+      // ----------------------------------------------------
+      function openLetter() {
+        // Start background piano automatically on first interaction
+        if (!synth.isPlaying) {
+          synth.start();
+        }
+
+        // Animate envelope opening
+        envelopeWrapper.classList.add('opening');
+
+        setTimeout(() => {
+          envelopeScene.classList.add('hidden');
+          letterScene.classList.add('visible');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 650);
+      }
+
+      function refoldLetter() {
+        letterScene.classList.remove('visible');
+        setTimeout(() => {
+          envelopeScene.classList.remove('hidden');
+          envelopeWrapper.classList.remove('opening');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 400);
+      }
+
+      waxSeal.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openLetter();
+      });
+
+      envelopeWrapper.addEventListener('click', () => {
+        openLetter();
+      });
+
+      refoldBtn.addEventListener('click', () => {
+        refoldLetter();
+      });
+
+      // ----------------------------------------------------
+      // 3. Response Options Interaction
+      // ----------------------------------------------------
+      const modalMessages = {
+        heard: {
+          title: "Thank You, My Love",
+          text: "Thank you for opening this and listening to my heart, Darla. Knowing you heard my words means everything to me. I love you endlessly, and I am here for you whenever you are ready."
+        },
+        talk: {
+          title: "I Am Waiting With Open Arms",
+          text: "Whenever you are ready, my love, let's talk. No defensiveness, no anger—only open ears, gentle understanding, and holding you close. I love you so much."
+        },
+        time: {
+          title: "Take All The Time You Need",
+          text: "I completely understand and honor your feelings, Darla. Your peace of mind and comfort come first. I will be right here, loving you unconditionally, whenever you are ready."
+        }
+      };
+
+      responseBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const type = btn.getAttribute('data-type');
+          const data = modalMessages[type] || modalMessages.heard;
+          modalTitle.textContent = data.title;
+          modalMessage.textContent = data.text;
+          responseModal.classList.add('active');
+
+          // Add a subtle burst of floating hearts
+          spawnHeartBurst();
+        });
+      });
+
+      modalCloseBtn.addEventListener('click', () => {
+        responseModal.classList.remove('active');
+      });
+
+      responseModal.addEventListener('click', (e) => {
+        if (e.target === responseModal) {
+          responseModal.classList.remove('active');
+        }
+      });
+
+      // ----------------------------------------------------
+      // 4. Canvas Rose Petals & Stardust Engine
+      // ----------------------------------------------------
+      const canvas = document.getElementById('petalsCanvas');
+      const ctx = canvas.getContext('2d');
+      let width, height;
+      const petals = [];
+      const petalCount = 42;
+
+      function resizeCanvas() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      class Petal {
+        constructor() {
+          this.reset(true);
+        }
+
+        reset(initial = false) {
+          this.x = Math.random() * width;
+          this.y = initial ? Math.random() * height : -20;
+          this.size = Math.random() * 14 + 10;
+          this.speedY = Math.random() * 0.9 + 0.6;
+          this.speedX = Math.random() * 1.2 - 0.6;
+          this.rotation = Math.random() * Math.PI * 2;
+          this.rotSpeed = (Math.random() - 0.5) * 0.02;
+          this.opacity = Math.random() * 0.55 + 0.35;
+          this.flip = Math.random() * Math.PI;
+          this.flipSpeed = Math.random() * 0.025 + 0.01;
+          this.hue = Math.random() * 15 - 7; // subtle shade variance
+        }
+
+        update() {
+          this.y += this.speedY;
+          this.x += Math.sin(this.y * 0.008) * 0.75 + this.speedX;
+          this.rotation += this.rotSpeed;
+          this.flip += this.flipSpeed;
+
+          if (this.y > height + 25 || this.x < -30 || this.x > width + 30) {
+            this.reset(false);
+          }
+        }
+
+        draw() {
+          ctx.save();
+          ctx.translate(this.x, this.y);
+          ctx.rotate(this.rotation);
+          ctx.scale(Math.sin(this.flip), 1);
+          ctx.globalAlpha = this.opacity;
+
+          // Gradient for natural rose petal depth
+          const grad = ctx.createRadialGradient(0, 0, 1, 0, 0, this.size);
+          grad.addColorStop(0, `hsla(${346 + this.hue}, 85%, 65%, 1)`);
+          grad.addColorStop(0.6, `hsla(${342 + this.hue}, 80%, 48%, 0.95)`);
+          grad.addColorStop(1, `hsla(${338 + this.hue}, 85%, 32%, 0.75)`);
+
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.moveTo(0, -this.size * 0.9);
+          ctx.bezierCurveTo(this.size * 0.8, -this.size * 0.8, this.size * 0.9, this.size * 0.6, 0, this.size);
+          ctx.bezierCurveTo(-this.size * 0.9, this.size * 0.6, -this.size * 0.8, -this.size * 0.8, 0, -this.size * 0.9);
+          ctx.fill();
+
+          ctx.restore();
+        }
+      }
+
+      for (let i = 0; i < petalCount; i++) {
+        petals.push(new Petal());
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        for (let i = 0; i < petals.length; i++) {
+          petals[i].update();
+          petals[i].draw();
+        }
+        requestAnimationFrame(animate);
+      }
+      animate();
+
+      function spawnHeartBurst() {
+        for (let i = 0; i < 18; i++) {
+          const heart = document.createElement('div');
+          heart.innerHTML = '❤';
+          heart.style.position = 'fixed';
+          heart.style.left = '50%';
+          heart.style.top = '50%';
+          heart.style.transform = 'translate(-50%, -50%)';
+          heart.style.color = '#e03c5f';
+          heart.style.fontSize = (Math.random() * 22 + 16) + 'px';
+          heart.style.pointerEvents = 'none';
+          heart.style.zIndex = '300';
+          heart.style.transition = 'all 1.6s cubic-bezier(0.1, 0.8, 0.3, 1)';
+          document.body.appendChild(heart);
+
+          const angle = Math.random() * Math.PI * 2;
+          const dist = Math.random() * 180 + 80;
+          const destX = Math.cos(angle) * dist;
+          const destY = Math.sin(angle) * dist - 60;
+
+          requestAnimationFrame(() => {
+            heart.style.transform = `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) scale(${Math.random() * 0.5 + 0.8})`;
+            heart.style.opacity = '0';
+          });
+
+          setTimeout(() => {
+            heart.remove();
+          }, 1700);
+        }
+      }
+
+    })();
+  </script>
+</body>
+</html>
